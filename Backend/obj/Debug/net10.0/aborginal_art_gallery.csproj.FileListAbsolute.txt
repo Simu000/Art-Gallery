@@ -101,3 +101,4 @@ C:\Users\Acer\Desktop\ArtGallery\Backend\obj\Debug\net10.0\refint\aborginal_art_
 C:\Users\Acer\Desktop\ArtGallery\Backend\obj\Debug\net10.0\aborginal_art_gallery.pdb
 C:\Users\Acer\Desktop\ArtGallery\Backend\obj\Debug\net10.0\aborginal_art_gallery.genruntimeconfig.cache
 C:\Users\Acer\Desktop\ArtGallery\Backend\obj\Debug\net10.0\ref\aborginal_art_gallery.dll
+C:\Users\Acer\Desktop\ArtGallery\Backend\obj\Debug\net10.0\aborginal_art_gallery.sourcelink.json

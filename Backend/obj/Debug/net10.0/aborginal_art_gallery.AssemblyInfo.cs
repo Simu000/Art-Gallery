@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("aborginal_art_gallery")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2211d885da7b79684251a598f55060f7cb22378c")]
 [assembly: System.Reflection.AssemblyProductAttribute("aborginal_art_gallery")]
 [assembly: System.Reflection.AssemblyTitleAttribute("aborginal_art_gallery")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
