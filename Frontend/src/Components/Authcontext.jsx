@@ -1,18 +1,20 @@
+// context/AuthContext.jsx
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import { userApi } from '../api/client'
 
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null)       // CurrentUserDto from /api/user/me
-  const [loading, setLoading] = useState(true) // initial check
+  const [user, setUser]       = useState(null)   // CurrentUserDto from GET /api/user/me
+  const [loading, setLoading] = useState(true)   // true during initial auth check
 
-  // Try to fetch the current user on mount (cookie may already exist)
+  // Try to load the logged-in user on mount (the JWT cookie may already exist)
   const fetchMe = useCallback(async () => {
     try {
       const me = await userApi.me()
       setUser(me)
     } catch {
+      // 401 = not logged in, silently ignore
       setUser(null)
     } finally {
       setLoading(false)
@@ -23,17 +25,29 @@ export function AuthProvider({ children }) {
     fetchMe()
   }, [fetchMe])
 
-  // Called after OTP verification succeeds (cookie is set by server)
-  const onLoginSuccess = useCallback(() => {
-    fetchMe()
+  /**
+   * Call this after OTP verification succeeds.
+   * The server has set the HttpOnly JWT cookie; we just need to re-fetch /me.
+   */
+  const onLoginSuccess = useCallback(async () => {
+    await fetchMe()
   }, [fetchMe])
 
-  const logout = useCallback(() => {
-    // Cookie is HttpOnly — we can't clear it from JS.
-    // Ask the backend to clear it, or just remove user state.
-    // If your backend has a /api/auth/logout endpoint, call it here.
+  /**
+   * Sign out: clear local user state.
+   * Because the cookie is HttpOnly we cannot clear it from JS directly.
+   * If your backend exposes POST /api/auth/logout, uncomment the fetch below.
+   */
+  const logout = useCallback(async () => {
+    try {
+      await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/logout`, {
+        method: 'POST',
+        credentials: 'include',
+      })
+    } catch {
+      // endpoint may not exist yet — that's fine
+    }
     setUser(null)
-    // Optionally: fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
   }, [])
 
   return (
@@ -44,5 +58,7 @@ export function AuthProvider({ children }) {
 }
 
 export function useAuth() {
-  return useContext(AuthContext)
+  const ctx = useContext(AuthContext)
+  if (!ctx) throw new Error('useAuth must be used inside <AuthProvider>')
+  return ctx
 }

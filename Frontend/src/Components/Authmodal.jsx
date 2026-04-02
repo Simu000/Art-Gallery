@@ -1,3 +1,4 @@
+// components/AuthModal.jsx
 import { useState } from 'react'
 import { auth } from '../api/client'
 import { useAuth } from '../context/AuthContext'
@@ -9,16 +10,17 @@ import './AuthModal.css'
  *   onClose — called when the modal should close
  */
 export default function AuthModal({ onClose }) {
-  // 'login' | 'register' | 'otp-login' | 'otp-register'
-  const [step, setStep] = useState('login')
-  const [form, setForm] = useState({ email: '', password: '', firstName: '', lastName: '', otp: '' })
+  // step: 'login' | 'register' | 'otp-login' | 'otp-register'
+  const [step, setStep]       = useState('login')
+  const [form, setForm]       = useState({ email: '', password: '', firstName: '', lastName: '', otp: '' })
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+  const [error, setError]     = useState('')
   const [message, setMessage] = useState('')
-  const { onLoginSuccess } = useAuth()
+  const { onLoginSuccess }    = useAuth()
 
   const set = (key) => (e) => setForm(f => ({ ...f, [key]: e.target.value }))
 
+  // ── Login: POST /api/auth/login ──────────────────────────────────────────
   const handleLogin = async (e) => {
     e.preventDefault()
     setError('')
@@ -34,12 +36,18 @@ export default function AuthModal({ onClose }) {
     }
   }
 
+  // ── Register: POST /api/auth/register ────────────────────────────────────
   const handleRegister = async (e) => {
     e.preventDefault()
     setError('')
     setLoading(true)
     try {
-      await auth.register({ email: form.email, password: form.password, firstName: form.firstName, lastName: form.lastName })
+      await auth.register({
+        email:     form.email,
+        password:  form.password,
+        firstName: form.firstName,
+        lastName:  form.lastName,
+      })
       setMessage('We sent a verification code to your email.')
       setStep('otp-register')
     } catch (err) {
@@ -49,6 +57,8 @@ export default function AuthModal({ onClose }) {
     }
   }
 
+  // ── Verify OTP ───────────────────────────────────────────────────────────
+  // POST /api/auth/verify-otp-login  OR  /api/auth/verify-otp-registration
   const handleVerifyOtp = async (e) => {
     e.preventDefault()
     setError('')
@@ -59,10 +69,10 @@ export default function AuthModal({ onClose }) {
       } else {
         await auth.verifyOtpRegistration({ email: form.email, otp: form.otp })
       }
-      // Server sets the JWT cookie — now load current user
+      // Server has set the JWT cookie — reload current user then close modal
       await onLoginSuccess()
       onClose()
-    } catch (err) {
+    } catch {
       setError('Invalid or expired code. Please try again.')
     } finally {
       setLoading(false)
@@ -74,7 +84,7 @@ export default function AuthModal({ onClose }) {
       <div className="modal">
         <button className="modal__close" onClick={onClose}>✕</button>
 
-        {/* OTP step */}
+        {/* ── OTP verification step ─────────────────────────────────────── */}
         {(step === 'otp-login' || step === 'otp-register') && (
           <form className="modal__form" onSubmit={handleVerifyOtp}>
             <div className="modal__logo">Ngurini</div>
@@ -99,14 +109,17 @@ export default function AuthModal({ onClose }) {
               {loading ? 'Verifying…' : 'Verify & Continue'}
             </button>
 
-            <button type="button" className="modal__switch"
-              onClick={() => setStep(step === 'otp-login' ? 'login' : 'register')}>
+            <button
+              type="button"
+              className="modal__switch"
+              onClick={() => { setStep(step === 'otp-login' ? 'login' : 'register'); setError('') }}
+            >
               ← Back
             </button>
           </form>
         )}
 
-        {/* Login step */}
+        {/* ── Login step ───────────────────────────────────────────────── */}
         {step === 'login' && (
           <form className="modal__form" onSubmit={handleLogin}>
             <div className="modal__logo">Ngurini</div>
@@ -134,7 +147,7 @@ export default function AuthModal({ onClose }) {
           </form>
         )}
 
-        {/* Register step */}
+        {/* ── Register step ────────────────────────────────────────────── */}
         {step === 'register' && (
           <form className="modal__form" onSubmit={handleRegister}>
             <div className="modal__logo">Ngurini</div>

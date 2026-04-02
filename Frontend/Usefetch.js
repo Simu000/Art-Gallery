@@ -1,25 +1,32 @@
-import { useState, useEffect, useCallback } from 'react'
+// hooks/useFetch.js
+import { useState, useEffect, useCallback, useRef } from 'react'
 
 /**
- * useFetch(fetchFn, deps)
- * fetchFn  — async function that returns data
- * deps     — dependency array (like useEffect)
+ * useFetch(fn, deps?)
+ *
+ * @param fn   — async function that returns data (e.g. () => artistsApi.getAll())
+ * @param deps — optional dependency array; if supplied, re-fetches when deps change
  *
  * Returns { data, loading, error, refetch }
  */
-export function useFetch(fetchFn, deps = []) {
-  const [data, setData] = useState(null)
+export function useFetch(fn, deps = []) {
+  const [data, setData]       = useState(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [error, setError]     = useState(null)
 
-  const run = useCallback(async () => {
+  // Keep a stable ref to fn so we can call it in the effect without it being
+  // a dependency (avoids infinite loops when fn is an inline arrow).
+  const fnRef = useRef(fn)
+  fnRef.current = fn
+
+  const execute = useCallback(async () => {
     setLoading(true)
     setError(null)
     try {
-      const result = await fetchFn()
+      const result = await fnRef.current()
       setData(result)
     } catch (err) {
-      setError(err.message || 'Something went wrong')
+      setError(err.message ?? 'Something went wrong.')
     } finally {
       setLoading(false)
     }
@@ -27,8 +34,8 @@ export function useFetch(fetchFn, deps = []) {
   }, deps)
 
   useEffect(() => {
-    run()
-  }, [run])
+    execute()
+  }, [execute])
 
-  return { data, loading, error, refetch: run }
+  return { data, loading, error, refetch: execute }
 }
