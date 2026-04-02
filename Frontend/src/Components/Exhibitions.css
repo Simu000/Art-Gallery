@@ -1,0 +1,316 @@
+.exhibitions-page {
+  /* inherits page-hero-thin from Artists.css */
+}
+
+.exhibitions-section {
+  padding: 80px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.exhibitions-section--past {
+  padding-bottom: 120px;
+}
+
+/* ─── HERO CARD ─── */
+.exhibition-hero-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  min-height: 560px;
+  overflow: hidden;
+  background: var(--charcoal);
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.exhibition-hero-card:hover {
+  opacity: 0.95;
+}
+
+.exhibition-hero-card__img-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.exhibition-hero-card__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.75;
+  transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s;
+}
+
+.exhibition-hero-card:hover img {
+  transform: scale(1.04);
+  opacity: 0.85;
+}
+
+.exhibition-hero-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(20,18,14,0.3) 0%, transparent 100%);
+}
+
+.exhibition-hero-card__content {
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.exhibition-hero-card__status {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.exhibition-hero-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.1;
+}
+
+.exhibition-hero-card__sub {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(255,255,255,0.5);
+}
+
+.exhibition-hero-card__desc {
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.6);
+  max-width: 480px;
+}
+
+.exhibition-hero-card__meta {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.35);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.exhibition-hero-card__sep {
+  color: var(--gold);
+}
+
+.exhibition-hero-card__cta {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 8px;
+  transition: letter-spacing 0.3s;
+}
+
+.exhibition-hero-card:hover .exhibition-hero-card__cta {
+  letter-spacing: 0.3em;
+}
+
+/* ─── UPCOMING GRID ─── */
+.exhibitions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.exhibition-card {
+  display: block;
+  border: 1px solid var(--border-light);
+  cursor: pointer;
+  transition: box-shadow 0.3s, transform 0.3s;
+  background: var(--white);
+}
+
+.exhibition-card:hover {
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+  transform: translateY(-4px);
+}
+
+.exhibition-card__img-wrap {
+  position: relative;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+
+.exhibition-card__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.exhibition-card:hover img {
+  transform: scale(1.05);
+}
+
+.exhibition-card__status-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: var(--charcoal);
+  color: var(--white);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+}
+
+.exhibition-card__body {
+  padding: 32px;
+}
+
+.exhibition-card__title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--charcoal);
+  margin-bottom: 8px;
+  transition: color 0.2s;
+}
+
+.exhibition-card:hover .exhibition-card__title {
+  color: var(--gold);
+}
+
+.exhibition-card__sub {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-style: italic;
+  color: var(--gray);
+  margin-bottom: 16px;
+}
+
+.exhibition-card__desc {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--charcoal-mid);
+  margin-bottom: 24px;
+}
+
+.exhibition-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-light);
+}
+
+.exhibition-card__dates {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--gray);
+}
+
+.exhibition-card__ticket {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 400;
+}
+
+/* ─── ARCHIVE ─── */
+.exhibitions-archive {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.archive-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 220px 80px 32px;
+  gap: 32px;
+  align-items: center;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border-light);
+  cursor: pointer;
+  transition: padding-left 0.3s ease;
+}
+
+.archive-row:hover {
+  padding-left: 12px;
+}
+
+.archive-row__img-wrap {
+  width: 100px;
+  height: 70px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.archive-row__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(30%);
+  transition: filter 0.3s;
+}
+
+.archive-row:hover img {
+  filter: grayscale(0%);
+}
+
+.archive-row__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--charcoal);
+  margin-bottom: 4px;
+  transition: color 0.2s;
+}
+
+.archive-row:hover .archive-row__title {
+  color: var(--gold);
+}
+
+.archive-row__sub {
+  font-size: 12px;
+  color: var(--gray);
+  font-style: italic;
+}
+
+.archive-row__dates {
+  font-size: 12px;
+  color: var(--gray);
+  letter-spacing: 0.05em;
+  text-align: right;
+}
+
+.archive-row__count {
+  font-size: 12px;
+  color: var(--gray-light);
+  text-align: right;
+}
+
+.archive-row__arrow {
+  font-size: 18px;
+  color: var(--gold);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.3s;
+}
+
+.archive-row:hover .archive-row__arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (max-width: 1024px) {
+  .exhibition-hero-card { grid-template-columns: 1fr; min-height: auto; }
+  .exhibition-hero-card__img-wrap { height: 50vw; }
+  .exhibitions-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .archive-row { grid-template-columns: 70px 1fr 32px; }
+  .archive-row__dates, .archive-row__count { display: none; }
+  .exhibition-hero-card__content { padding: 40px 24px; }
+}
