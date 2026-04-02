@@ -1,33 +1,26 @@
-// api/client.js
-// Base URL — change this to match your backend in production
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5126'
 
-// ─── Core fetch wrapper ───────────────────────────────────────────────────────
 async function request(path, options = {}) {
   const url = `${BASE_URL}${path}`
   const res = await fetch(url, {
-    credentials: 'include', // always send JWT cookie
+    credentials: 'include',
     ...options,
     headers: {
-      // Don't set Content-Type for FormData (browser sets it with boundary)
       ...(options.body instanceof FormData ? {} : { 'Content-Type': 'application/json' }),
       ...options.headers,
     },
   })
 
   if (!res.ok) {
-    // Try to parse a JSON error body, otherwise fall back to status text
     let msg = `Request failed: ${res.status} ${res.statusText}`
     try {
       const json = await res.json()
       msg = json.message ?? json.title ?? JSON.stringify(json)
     } catch {
-      // ignore parse errors
     }
     throw new Error(msg)
   }
 
-  // 204 No Content — nothing to parse
   if (res.status === 204) return null
 
   return res.json()
@@ -38,30 +31,21 @@ const post = (path, body)  => request(path, { method: 'POST',   body: body insta
 const put  = (path, body)  => request(path, { method: 'PUT',    body: body instanceof FormData ? body : JSON.stringify(body) })
 const del  = (path)        => request(path, { method: 'DELETE' })
 
-// ─── Auth  (/api/auth/*) ──────────────────────────────────────────────────────
 export const auth = {
-  /** POST /api/auth/register  — sends OTP to email */
   register: (dto) => post('/api/auth/register', dto),
 
-  /** POST /api/auth/login  — sends OTP to email */
   login: (dto) => post('/api/auth/login', dto),
 
-  /** POST /api/auth/verify-otp-registration  — sets JWT cookie on success */
   verifyOtpRegistration: (dto) => post('/api/auth/verify-otp-registration', dto),
 
-  /** POST /api/auth/verify-otp-login  — sets JWT cookie on success */
   verifyOtpLogin: (dto) => post('/api/auth/verify-otp-login', dto),
 }
 
-// ─── Current user  (/api/user/*) ─────────────────────────────────────────────
 export const userApi = {
-  /** GET /api/user/me  — returns CurrentUserDto (requires auth cookie) */
   me: () => get('/api/user/me'),
 
-  /** GET /api/user  — returns all users (Admin only) */
   getAll: () => get('/api/user'),
 
-  /** POST /api/user/me/profile-image  — multipart upload */
   uploadProfileImage: (file) => {
     const fd = new FormData()
     fd.append('file', file)
@@ -69,15 +53,11 @@ export const userApi = {
   },
 }
 
-// ─── Artists  (/api/artists/*) ───────────────────────────────────────────────
 export const artistsApi = {
-  /** GET /api/artists */
   getAll: () => get('/api/artists'),
 
-  /** GET /api/artists/:id */
   getById: (id) => get(`/api/artists/${id}`),
 
-  /** POST /api/artists  (Admin, multipart) */
   create: (dto) => {
     const fd = new FormData()
     fd.append('FirstName', dto.firstName)
@@ -89,7 +69,6 @@ export const artistsApi = {
     return post('/api/artists', fd)
   },
 
-  /** PUT /api/artists/:id  (Admin, multipart) */
   update: (id, dto) => {
     const fd = new FormData()
     fd.append('FirstName', dto.firstName)
@@ -101,25 +80,18 @@ export const artistsApi = {
     return put(`/api/artists/${id}`, fd)
   },
 
-  /** DELETE /api/artists/:id  (Admin) */
   delete: (id) => del(`/api/artists/${id}`),
 }
 
-// ─── Artifacts  (/api/artifacts/*) ──────────────────────────────────────────
 export const artifactsApi = {
-  /** GET /api/artifacts */
   getAll: () => get('/api/artifacts'),
 
-  /** GET /api/artifacts/:id */
   getById: (id) => get(`/api/artifacts/${id}`),
 
-  /** GET /api/artifacts/search?q=query */
   search: (q) => get(`/api/artifacts/search?q=${encodeURIComponent(q)}`),
 
-  /** GET /api/artifacts/facts */
   getFacts: () => get('/api/artifacts/facts'),
 
-  /** POST /api/artifacts  (Admin, multipart) */
   create: (dto) => {
     const fd = new FormData()
     fd.append('Title',       dto.title)
@@ -131,7 +103,6 @@ export const artifactsApi = {
     return post('/api/artifacts', fd)
   },
 
-  /** PUT /api/artifacts/:id  (Admin, multipart) */
   update: (id, dto) => {
     const fd = new FormData()
     fd.append('Title',       dto.title)
@@ -143,19 +114,14 @@ export const artifactsApi = {
     return put(`/api/artifacts/${id}`, fd)
   },
 
-  /** DELETE /api/artifacts/:id  (Admin) */
   delete: (id) => del(`/api/artifacts/${id}`),
 }
 
-// ─── Exhibitions  (/api/exhibitions/*) ───────────────────────────────────────
 export const exhibitionsApi = {
-  /** GET /api/exhibitions */
   getAll: () => get('/api/exhibitions'),
 
-  /** GET /api/exhibitions/:id */
   getById: (id) => get(`/api/exhibitions/${id}`),
 
-  /** POST /api/exhibitions  (Admin, multipart) */
   create: (dto) => {
     const fd = new FormData()
     fd.append('Name',        dto.name)
@@ -168,7 +134,6 @@ export const exhibitionsApi = {
     return post('/api/exhibitions', fd)
   },
 
-  /** PUT /api/exhibitions/:id  (Admin, multipart) */
   update: (id, dto) => {
     const fd = new FormData()
     fd.append('Name',        dto.name)
@@ -181,13 +146,10 @@ export const exhibitionsApi = {
     return put(`/api/exhibitions/${id}`, fd)
   },
 
-  /** DELETE /api/exhibitions/:id  (Admin) */
   delete: (id) => del(`/api/exhibitions/${id}`),
 }
 
-// ─── Comments  (/api/comments/*) ─────────────────────────────────────────────
 export const commentsApi = {
-  /** GET /api/comments/artifact/:artifactId */
   getByArtifact: (artifactId) => get(`/api/comments/artifact/${artifactId}`),
 
   /** POST /api/comments  (requires auth) */
