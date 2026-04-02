@@ -40,7 +40,7 @@ export function AuthProvider({ children }) {
    */
   const logout = useCallback(async () => {
     try {
-      await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/logout`, {
+      await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5126'}/api/auth/logout`, {
         method: 'POST',
         credentials: 'include',
       })
