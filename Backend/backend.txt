@@ -1,0 +1,28 @@
+Understanding the flow
+
+1 -- User Bounded Context (User can Register, Login)
+
+For Registring
+
+the endpoint is "http://localhost:5126/api/auth/register"
+
+Frontend will send body which contains -->
+FirstName, LastName, Email and Password
+
+Now after the registration the backend will send a reponse which contains -->
+Id, FirstName, LastName, Email, Role, and a JWT token which we will be send in cookies
+Now with every request the frontend will send token and the backend will validates it in some endpoints
+
+Now we look at the login endpoint
+"http://localhost:5126/api/auth/login"
+
+
+
+
+
+
+
+
+
+
+
