@@ -26,6 +26,13 @@ public class ExhibitionRepository : IExhibitionRepository
         using var conn = _context.CreateConnection();
         return await conn.QueryFirstOrDefaultAsync<Exhibition>(query, new { Id = id });
     }
+    public async Task<List<int>> getArtifactIdsForExhibition(int exhibitionId)
+    {
+        var query = "SELECT artifactid FROM exhibition_artifacts WHERE exhibitionid = @ExhibitionId";
+        using var conn = _context.CreateConnection();
+        var ids = await conn.QueryAsync<int>(query, new { ExhibitionId = exhibitionId });
+        return ids.ToList();
+    }
 
     public async Task<Exhibition> createExhibition(Exhibition exhibition, List<int> artifactIds)
     {
@@ -87,20 +94,22 @@ public class ExhibitionRepository : IExhibitionRepository
 
             var rows = await conn.ExecuteAsync(updateSql, exhibition, transaction);
 
-            if (rows > 0 && artifactIds.Any())
+            if (rows > 0)
             {
-                await conn.ExecuteAsync("DELETE FROM exhibition_artifacts WHERE exhibition_id = @Id",
+                await conn.ExecuteAsync("DELETE FROM exhibition_artifacts WHERE exhibitionid = @Id",
                     new { Id = exhibition.Id }, transaction);
 
-                
-                var insertJunction = @"
-                INSERT INTO exhibition_artifacts (exhibitionid, artifactid) 
-                VALUES (@ExhibitionId, @ArtifactId)";
-
-                foreach (var artId in artifactIds)
+                if (artifactIds.Any())
                 {
-                    await conn.ExecuteAsync(insertJunction,
-                        new { ExhibitionId = exhibition.Id, ArtifactId = artId }, transaction);
+                    var insertJunction = @"
+                    INSERT INTO exhibition_artifacts (exhibitionid, artifactid) 
+                    VALUES (@ExhibitionId, @ArtifactId)";
+
+                    foreach (var artId in artifactIds)
+                    {
+                        await conn.ExecuteAsync(insertJunction,
+                            new { ExhibitionId = exhibition.Id, ArtifactId = artId }, transaction);
+                    }
                 }
             }
 

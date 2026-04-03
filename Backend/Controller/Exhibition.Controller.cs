@@ -32,7 +32,22 @@ public class ExhibitionsController : ControllerBase
     public async Task<IActionResult> getById(int id)
     {
         var ex = await _repo.getExhibitionById(id);
-        return ex != null ? Ok(ex) : NotFound();
+        if (ex == null) return NotFound();
+
+        var artifactIds = await _repo.getArtifactIdsForExhibition(id);
+        var dto = new ExhibitionDto
+        {
+            Id = ex.Id,
+            Name = ex.Name,
+            Description = ex.Description,
+            StartDate = ex.StartDate,
+            EndDate = ex.EndDate,
+            Location = ex.Location,
+            CoverImageUrl = ex.CoverImageUrl,
+            ArtifactIds = artifactIds
+        };
+
+        return Ok(dto);
     }
 
     [Authorize(Roles = "Admin")]

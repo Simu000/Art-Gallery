@@ -77,7 +77,9 @@ public class AuthService : IAuthService
 
     public async Task<VerifyOtpResponseDto> VerifyRegistrationOtpAsync(VerifyOtpDto dto)
     {
-        var otpRecord = await _otpService.ValidateOtpAsync(dto.email, dto.otp, "Registration");
+        var email = dto.email.Trim();
+        var otp = dto.otp.Trim();
+        var otpRecord = await _otpService.ValidateOtpAsync(email, otp, "Registration");
         if (otpRecord is null)
         {
             return new VerifyOtpResponseDto
@@ -87,7 +89,7 @@ public class AuthService : IAuthService
             };
         }
 
-        var user = await _userRepo.getUserByEmail(dto.email);
+        var user = await _userRepo.getUserByEmail(email);
         if (user is null)
         {
             return new VerifyOtpResponseDto
@@ -112,8 +114,9 @@ public class AuthService : IAuthService
 
     public async Task<VerifyOtpResponseDto> VerifyLoginOtpAsync(VerifyOtpDto dto)
     {
-        // FIXED: Added 'await' here
-        var otpRecord = await _otpService.ValidateOtpAsync(dto.email, dto.otp, "Login");
+        var email = dto.email.Trim();
+        var otp = dto.otp.Trim();
+        var otpRecord = await _otpService.ValidateOtpAsync(email, otp, "Login");
         if (otpRecord is null)
         {
             return new VerifyOtpResponseDto
@@ -123,7 +126,7 @@ public class AuthService : IAuthService
             };
         }
         
-        var user = await _userRepo.getUserByEmail(dto.email);
+        var user = await _userRepo.getUserByEmail(email);
         if (user is null)
         {
             return new VerifyOtpResponseDto

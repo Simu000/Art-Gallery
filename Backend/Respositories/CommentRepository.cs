@@ -17,7 +17,14 @@ public class CommentRepository : ICommentRepository
     public async Task<IEnumerable<CommentDto>> getCommentsByArtifact(int artifactId)
     {
         var query = @"
-            SELECT c.id, c.artifactid, c.userid, u.firstname, c.text, c.createdat
+            SELECT c.id,
+                   c.artifactid,
+                   c.userid,
+                   u.firstname AS userfirstname,
+                   u.lastname AS userlastname,
+                   u.profileimage AS userprofileimage,
+                   c.text,
+                   c.createdat
             FROM comments c
             JOIN users u ON c.userid = u.id
             WHERE c.artifactid = @ArtifactId

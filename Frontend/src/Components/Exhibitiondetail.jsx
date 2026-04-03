@@ -1,10 +1,10 @@
 // pages/ExhibitionDetail.jsx
 import { useParams, Link } from 'react-router-dom'
-import { exhibitionsApi } from '../api/client'
+import { exhibitionsApi, artifactsApi } from '../api/client'
 import { useFetch } from '../hooks/useFetch'
-import LoadingSpinner from '../components/LoadingSpinner'
-import ErrorMessage from '../components/ErrorMessage'
-import './ExhibitionDetail.css'
+import LoadingSpinner from './Loadingspinner'
+import ErrorMessage from './Errormessage'
+import './Exhibitiondetail.css'
 
 const FALLBACK_COVER = 'https://images.unsplash.com/photo-1531243269054-1c6a7b70af21?w=1600&q=80'
 const FALLBACK_ART   = 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=800&q=80'
@@ -21,14 +21,14 @@ export default function ExhibitionDetail() {
   const { data: exhibition, loading, error, refetch } = useFetch(
     () => exhibitionsApi.getById(id), [id]
   )
+  const { data: allArtifacts } = useFetch(artifactsApi.getAll)
 
   if (loading) return <LoadingSpinner message="Loading exhibition…" />
   if (error)   return <ErrorMessage message={error} onRetry={refetch} />
   if (!exhibition) return <ErrorMessage message="Exhibition not found." />
 
-  // The backend's getExhibitionById should return an `artifacts` array on the DTO.
-  // If your ExhibitionDto doesn't include artifacts, this gracefully falls back to [].
-  const works = exhibition.artifacts ?? []
+  const artifactIds = exhibition.artifactIds ?? []
+  const works = (allArtifacts ?? []).filter((art) => artifactIds.includes(art.id))
 
   return (
     <main className="exhibition-detail">
@@ -80,7 +80,7 @@ export default function ExhibitionDetail() {
                     <div className="exhibition-work-card__info">
                       <div className="exhibition-work-card__title">{work.title}</div>
                       <div className="exhibition-work-card__meta">
-                        {work.artistFirstName} {work.artistLastName}
+                        {work.medium}
                         {work.yearCreated && ` · ${work.yearCreated}`}
                       </div>
                     </div>

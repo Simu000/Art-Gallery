@@ -2,9 +2,7 @@
 
 using aborginal_art_gallery.DTOs;
 using aborginal_art_gallery.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Npgsql.Internal;
 
 
 [ApiController]
@@ -54,11 +52,14 @@ public class AuthController : ControllerBase
     {
         var result = await _authService.VerifyRegistrationOtpAsync(dto);
 
-        if (result is null || string.IsNullOrEmpty(result.Token)) return BadRequest();
+        if (result is null || string.IsNullOrEmpty(result.Token))
+        {
+            return BadRequest(new ErrorDto { message = result?.Message ?? "Invalid or expired OTP" });
+        }
 
         SetJwtCookie(result.Token!);
 
-        return Ok(result.Message);
+        return Ok(new { message = result.Message });
     }
 
     [HttpPost("verify-otp-login")]
@@ -66,22 +67,26 @@ public class AuthController : ControllerBase
     {
         var result = await _authService.VerifyLoginOtpAsync(dto);
 
-        if (result.success == false) return BadRequest();
+        if (result.success == false)
+        {
+            return BadRequest(new ErrorDto { message = result.Message });
+        }
 
         SetJwtCookie(result.Token!);
 
-        return Ok(result.Message);
+        return Ok(new { message = result.Message });
     }
 
 
 
     private void SetJwtCookie(string token)
     {
+        var isHttps = Request.IsHttps;
         var cookieOptions = new CookieOptions
         {
             HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.None,
+            Secure = isHttps,
+            SameSite = isHttps ? SameSiteMode.None : SameSiteMode.Lax,
             Expires = DateTime.UtcNow.AddDays(7)
 
         };

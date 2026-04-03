@@ -22,7 +22,7 @@ export default function ArtistDetail() {
   );
 
   // Filter artworks for this artist
-  const artworks = allArtifacts?.filter(art => art.artistid === parseInt(id)) || [];
+  const artworks = allArtifacts?.filter(art => art.artistId === parseInt(id, 10)) || [];
 
   if (loading) return <LoadingSpinner message="Loading artist..." />;
   if (error) return <ErrorMessage message={error} onRetry={refetch} />;
@@ -33,8 +33,8 @@ export default function ArtistDetail() {
       <div className="artist-detail__hero">
         <div className="artist-detail__hero-img-wrap">
           <img 
-            src={artist.photourl || FALLBACK_IMG} 
-            alt={`${artist.firstname} ${artist.lastname}`} 
+            src={artist.photoUrl || FALLBACK_IMG}
+            alt={`${artist.firstName} ${artist.lastName}`}
           />
           <div className="artist-detail__hero-overlay" />
         </div>
@@ -42,10 +42,10 @@ export default function ArtistDetail() {
           <Link to="/artists" className="back-link">← All Artists</Link>
           <div className="artist-detail__hero-tribe">{artist.country || 'Australia'}</div>
           <h1 className="artist-detail__hero-name">
-            {artist.firstname} {artist.lastname}
+            {artist.firstName} {artist.lastName}
           </h1>
-          {artist.birthyear && (
-            <div className="artist-detail__hero-region">b. {artist.birthyear}</div>
+          {artist.birthYear && (
+            <div className="artist-detail__hero-region">b. {artist.birthYear}</div>
           )}
         </div>
       </div>
@@ -64,10 +64,10 @@ export default function ArtistDetail() {
                 <span className="artist-tag__label">Country</span>
                 <span className="artist-tag__value">{artist.country || 'Australia'}</span>
               </div>
-              {artist.birthyear && (
+              {artist.birthYear && (
                 <div className="artist-tag">
                   <span className="artist-tag__label">Born</span>
-                  <span className="artist-tag__value">{artist.birthyear}</span>
+                  <span className="artist-tag__value">{artist.birthYear}</span>
                 </div>
               )}
             </div>
@@ -84,13 +84,13 @@ export default function ArtistDetail() {
                 <Link to={`/artifacts/${work.id}`} key={work.id} className="artist-work-card">
                   <div className="artist-work-card__img-wrap">
                     <img 
-                      src={work.imageurl || FALLBACK_IMG} 
+                      src={work.imageUrl || FALLBACK_IMG}
                       alt={work.title} 
                     />
                   </div>
                   <div className="artist-work-card__info">
                     <div className="artist-work-card__title">{work.title}</div>
-                    <div className="artist-work-card__year">{work.yearcreated}</div>
+                    <div className="artist-work-card__year">{work.yearCreated}</div>
                   </div>
                 </Link>
               ))}

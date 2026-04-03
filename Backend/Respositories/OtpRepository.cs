@@ -18,8 +18,8 @@ public class OtpRepository : IOtpRepository
     }
     public async Task<UserOtp?> GetLatestOtpByUserEmail(string email, string purpose)
     {
-        var query = @"SELECT id, user_id, otp, expires_at, is_used, created_at, email
-                      FROM user_otps WHERE email = @Email AND purpose = @Purpose AND expires_at > NOW() ORDER BY
+        var query = @"SELECT id, user_id, otp, expires_at, is_used, created_at, email, purpose
+                      FROM user_otps WHERE LOWER(email) = LOWER(@Email) AND purpose = @Purpose AND expires_at > NOW() ORDER BY
                       created_at DESC LIMIT 1";
         
         using var conn = _context.CreateConnection();
@@ -46,7 +46,8 @@ public class OtpRepository : IOtpRepository
 
     public async Task saveOtp(int userId, string otp, string purpose, string email)
     {
-        var query = "INSERT INTO user_otps (user_id, otp, purpose, email) VALUES (@userId, @otp, @purpose, @email)";
+        var query = @"INSERT INTO user_otps (user_id, otp, purpose, email, expires_at, is_used)
+                      VALUES (@userId, @otp, @purpose, @email, NOW() + INTERVAL '10 minutes', FALSE)";
         using var conn = _context.CreateConnection();
         await conn.ExecuteAsync(query, new { userId, otp, purpose, email });
     }

@@ -106,11 +106,11 @@ export default function Artifacts() {
                   className={`artifact-card ${i % 5 === 0 ? 'artifact-card--tall' : ''}`}
                 >
                   <div className="artifact-card__img-wrap">
-                    <img src={art.imageurl || FALLBACK} alt={art.title} />
+                    <img src={art.imageUrl || FALLBACK} alt={art.title} />
                     <div className="artifact-card__hover">
                       <div className="artifact-card__hover-content">
                         <div className="artifact-card__hover-medium">{art.medium}</div>
-                        <div className="artifact-card__hover-dim">{art.yearcreated}</div>
+                        <div className="artifact-card__hover-dim">{art.yearCreated}</div>
                         <div className="artifact-card__hover-cta">View Work →</div>
                       </div>
                     </div>
@@ -119,7 +119,7 @@ export default function Artifacts() {
                     <div>
                       <div className="artifact-card__title">{art.title}</div>
                       <div className="artifact-card__artist">
-                        {art.yearcreated}
+                        {art.yearCreated}
                       </div>
                     </div>
                     <div className="artifact-card__type">{art.medium?.split(' ')[0]}</div>

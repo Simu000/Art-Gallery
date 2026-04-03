@@ -53,7 +53,15 @@ public class ArtifactRepository : IArtifactRepository
 
     public async Task<bool> UpdateAsync(Artifact artifact)
     {
-        var query = "UPDATE artifacts SET title = @Title, description = @Description, medium = @Medium, yearcreated = @YearCreated, imageurl = @ImageUrl WHERE id = @Id";
+        var query = @"
+            UPDATE artifacts
+            SET title = @Title,
+                description = @Description,
+                medium = @Medium,
+                yearcreated = @YearCreated,
+                imageurl = @ImageUrl,
+                artistid = @ArtistId
+            WHERE id = @Id";
 
         using var conn = _context.CreateConnection();
 

@@ -37,7 +37,16 @@ public class ArtistRepository : IArtistRepository
 
     public async Task<bool> updateArtist(Artist artist)
     {
-        var query = "UPDATE artists SET firstname = @FirstName, lastname = LastName, country = @Country, birthyear = @BirthYear, photourl = @PhotoUrl WHERE id = @Id";
+        var query = @"
+            UPDATE artists
+            SET firstname = @FirstName,
+                lastname = @LastName,
+                country = @Country,
+                bio = @Bio,
+                birthyear = @BirthYear,
+                photourl = @PhotoUrl,
+                modifiedat = CURRENT_TIMESTAMP
+            WHERE id = @Id";
         using var conn = _context.CreateConnection();
 
         var result = await conn.ExecuteAsync(query, artist);

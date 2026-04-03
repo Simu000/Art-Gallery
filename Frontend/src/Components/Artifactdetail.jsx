@@ -62,7 +62,7 @@ export default function ArtifactDetail() {
       <div className="artifact-detail__hero">
         <div className="artifact-detail__img-side">
           <div className="artifact-detail__img-wrap">
-            <img src={artifact.imageurl || FALLBACK} alt={artifact.title} />
+            <img src={artifact.imageUrl || FALLBACK} alt={artifact.title} />
           </div>
         </div>
         <div className="artifact-detail__info-side">
@@ -70,8 +70,8 @@ export default function ArtifactDetail() {
           <div className="artifact-detail__era">Artwork</div>
           <h1 className="artifact-detail__title">{artifact.title}</h1>
           
-          {artifact.artistid && (
-            <Link to={`/artists/${artifact.artistid}`} className="artifact-detail__artist-link">
+          {artifact.artistId && (
+            <Link to={`/artists/${artifact.artistId}`} className="artifact-detail__artist-link">
               <div className="artifact-detail__artist-name">
                 View Artist Profile →
               </div>
@@ -87,7 +87,7 @@ export default function ArtifactDetail() {
           <div className="artifact-detail__specs">
             <div className="artifact-detail__spec">
               <span className="artifact-detail__spec-label">Year</span>
-              <span className="artifact-detail__spec-value">{artifact.yearcreated || 'Unknown'}</span>
+              <span className="artifact-detail__spec-value">{artifact.yearCreated || 'Unknown'}</span>
             </div>
             <div className="artifact-detail__spec">
               <span className="artifact-detail__spec-label">Medium</span>
@@ -143,21 +143,21 @@ export default function ArtifactDetail() {
               {comments?.map(c => (
                 <div key={c.id} className="comment">
                   <img 
-                    src={c.userProfileImage || FALLBACK} 
-                    alt={c.userFirstName} 
+                    src={c.userProfileImage || FALLBACK}
+                    alt={c.userFirstName}
                     className="comment__avatar" 
                   />
                   <div>
                     <div className="comment__header">
                       <div className="comment__name">{c.userFirstName} {c.userLastName}</div>
                       <div className="comment__date">
-                        {new Date(c.createdat).toLocaleDateString('en-AU', {
+                        {new Date(c.createdAt).toLocaleDateString('en-AU', {
                           day: 'numeric', month: 'short', year: 'numeric'
                         })}
                       </div>
                     </div>
                     <p className="comment__text">{c.text}</p>
-                    {user && user.id === c.userid && (
+                    {user && user.id === c.userId && (
                       <div className="comment__footer">
                         <button 
                           className="comment__delete" 

@@ -2,8 +2,8 @@
 import { Link } from 'react-router-dom'
 import { exhibitionsApi } from '../api/client'
 import { useFetch } from '../hooks/useFetch'
-import LoadingSpinner from '../components/LoadingSpinner'
-import ErrorMessage from '../components/ErrorMessage'
+import LoadingSpinner from './Loadingspinner'
+import ErrorMessage from './Errormessage'
 import './Exhibitions.css'
 
 const FALLBACK = 'https://images.unsplash.com/photo-1531243269054-1c6a7b70af21?w=1600&q=80'

@@ -69,15 +69,12 @@ export default function Landing() {
 
         <div className="landing__features">
           <div className="landing__feature">
-            <div className="landing__feature-icon">🎨</div>
             <div className="landing__feature-text">Curated Collection</div>
           </div>
           <div className="landing__feature">
-            <div className="landing__feature-icon">🖼️</div>
             <div className="landing__feature-text">Indigenous Artists</div>
           </div>
           <div className="landing__feature">
-            <div className="landing__feature-icon">🏛️</div>
             <div className="landing__feature-text">Exhibitions</div>
           </div>
         </div>

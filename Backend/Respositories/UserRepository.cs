@@ -32,7 +32,7 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> getUserByEmail(string email)
     {
-        var query = "SELECT * FROM Users WHERE Email = @Email";
+        var query = "SELECT * FROM Users WHERE LOWER(Email) = LOWER(@Email)";
 
         using var conn = _context.CreateConnection();
         return await conn.QueryFirstOrDefaultAsync<User>(query, new { Email = email });

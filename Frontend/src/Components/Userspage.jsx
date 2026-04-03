@@ -2,9 +2,9 @@
 import { userApi } from '../api/client'
 import { useFetch } from '../hooks/useFetch'
 import { useAuth } from '../context/AuthContext'
-import LoadingSpinner from '../components/LoadingSpinner'
-import ErrorMessage from '../components/ErrorMessage'
-import './UsersPage.css'
+import LoadingSpinner from './Loadingspinner'
+import ErrorMessage from './Errormessage'
+import './Userspage.css'
 
 const FALLBACK_IMG = 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&q=80'
 

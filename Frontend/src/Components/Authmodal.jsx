@@ -65,15 +65,16 @@ export default function AuthModal({ onClose }) {
     setLoading(true)
     try {
       if (step === 'otp-login') {
-        await auth.verifyOtpLogin({ email: form.email, otp: form.otp })
+        await auth.verifyOtpLogin({ email: form.email.trim(), otp: form.otp.trim() })
       } else {
-        await auth.verifyOtpRegistration({ email: form.email, otp: form.otp })
+        await auth.verifyOtpRegistration({ email: form.email.trim(), otp: form.otp.trim() })
       }
       // Server has set the JWT cookie — reload current user then close modal
       await onLoginSuccess()
       onClose()
-    } catch {
-      setError('Invalid or expired code. Please try again.')
+    } catch (err) {
+      const backendMessage = err?.message || 'Invalid or expired code. Please try again.'
+      setError(backendMessage)
     } finally {
       setLoading(false)
     }

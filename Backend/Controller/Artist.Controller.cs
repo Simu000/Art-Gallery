@@ -83,6 +83,7 @@ public class ArtistController : ControllerBase
 
         existing.FirstName = dto.FirstName;
         existing.LastName = dto.LastName;
+        existing.Country = dto.Country ?? existing.Country;
         existing.Bio = dto.Bio;
         existing.PhotoUrl = photoUrl;
         existing.BirthYear = dto.BirthYear;

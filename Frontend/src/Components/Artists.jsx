@@ -44,18 +44,18 @@ export default function Artists() {
             >
               <div className="artist-row__num">{String(i + 1).padStart(2, '0')}</div>
               <div className="artist-row__img-wrap">
-                <img 
-                  src={artist.photourl || FALLBACK_IMG} 
-                  alt={`${artist.firstname} ${artist.lastname}`} 
+                    <img
+                      src={artist.photoUrl || FALLBACK_IMG}
+                      alt={`${artist.firstName} ${artist.lastName}`}
                   className="artist-row__img" 
                 />
               </div>
               <div className="artist-row__info">
-                <div className="artist-row__name">{artist.firstname} {artist.lastname}</div>
+                <div className="artist-row__name">{artist.firstName} {artist.lastName}</div>
                 <div className="artist-row__tribe">{artist.country}</div>
               </div>
               <div className="artist-row__meta">
-                <div className="artist-row__region">b. {artist.birthyear}</div>
+                <div className="artist-row__region">b. {artist.birthYear}</div>
                 <div className="artist-row__specialty" style={{ fontStyle: 'italic' }}>{artist.bio?.slice(0, 60)}…</div>
               </div>
               <div className="artist-row__arrow">→</div>
@@ -74,12 +74,12 @@ export default function Artists() {
               <Link to={`/artists/${artist.id}`} key={artist.id} className="mosaic-card">
                 <div className="mosaic-card__img-wrap">
                   <img 
-                    src={artist.photourl || FALLBACK_IMG} 
-                    alt={`${artist.firstname} ${artist.lastname}`} 
+                    src={artist.photoUrl || FALLBACK_IMG}
+                    alt={`${artist.firstName} ${artist.lastName}`}
                   />
                   <div className="mosaic-card__overlay">
                     <div className="mosaic-card__info">
-                      <div className="mosaic-card__name">{artist.firstname} {artist.lastname}</div>
+                      <div className="mosaic-card__name">{artist.firstName} {artist.lastName}</div>
                       <div className="mosaic-card__tribe">{artist.country}</div>
                     </div>
                   </div>

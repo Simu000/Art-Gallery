@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { exhibitionsApi, artistsApi, artifactsApi } from '../api/client'
 import { useFetch } from '../hooks/useFetch'
-import LoadingSpinner from '../components/LoadingSpinner'
+import LoadingSpinner from './Loadingspinner'
 import './Home.css'
 
 export default function Home() {
