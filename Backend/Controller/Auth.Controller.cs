@@ -10,10 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly IConfiguration _configuration;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IAuthService authService, IConfiguration configuration)
     {
         _authService = authService;
+        _configuration = configuration;
     }
 
     [HttpPost("register")]
@@ -75,6 +77,27 @@ public class AuthController : ControllerBase
         SetJwtCookie(result.Token!);
 
         return Ok(new { message = result.Message });
+    }
+
+    [HttpPost("logout")]
+    public IActionResult Logout()
+    {
+        var isHttps = Request.IsHttps;
+        Response.Cookies.Append("jwt", "", new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = isHttps,
+            SameSite = isHttps ? SameSiteMode.None : SameSiteMode.Lax,
+            Expires = DateTime.UtcNow.AddDays(-1)
+        });
+        return Ok(new { message = "Logged out successfully" });
+    }
+
+    [HttpGet("google")]
+    public IActionResult GoogleLogin()
+    {
+        var frontendBaseUrl = _configuration["Frontend:BaseUrl"] ?? "http://localhost:5173";
+        return Redirect($"{frontendBaseUrl}/login?error=google_not_configured");
     }
 
 

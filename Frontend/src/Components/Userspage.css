@@ -309,3 +309,50 @@
   .user-comment__artwork { display: none; }
   .user-profile__header { grid-template-columns: 1fr; }
 }
+
+/* Active community page layout */
+.users-page {
+  min-height: 65vh;
+}
+
+.users-page__signin-prompt,
+.users-page__welcome {
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  padding: 28px;
+  margin-bottom: 24px;
+}
+
+.users-page__welcome {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.users-page__welcome-avatar img,
+.users-page__initials {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+
+.users-page__initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gold);
+  color: var(--white);
+  font-size: 16px;
+}
+
+.users-page__welcome-name {
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 1.2;
+}
+
+.users-page__welcome-email,
+.users-page__welcome-role {
+  font-size: 14px;
+  color: var(--gray);
+}

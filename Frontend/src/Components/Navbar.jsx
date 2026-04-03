@@ -23,7 +23,7 @@ export default function Navbar() {
     setUserMenuOpen(false);
   }, [location]);
 
-  const isHome = location.pathname === '/home';
+  const isHome = location.pathname === '/';
   
   const links = [
     { to: '/artists', label: 'Artists' },
@@ -41,7 +41,7 @@ export default function Navbar() {
   return (
     <nav className={`navbar ${scrolled || !isHome ? 'navbar--solid' : ''} ${menuOpen ? 'navbar--open' : ''}`}>
       <div className="navbar__inner">
-        <Link to="/home" className="navbar__logo">
+        <Link to="/" className="navbar__logo">
           <span className="navbar__logo-text">Ngurini</span>
           <span className="navbar__logo-sub">Aboriginal Art Gallery</span>
         </Link>
@@ -57,27 +57,31 @@ export default function Navbar() {
             </Link>
           ))}
 
-          <div className="navbar__user" onClick={() => setUserMenuOpen(!userMenuOpen)}>
-            {user?.profileImageUrl ? (
-              <img src={user.profileImageUrl} alt={user.firstName} className="navbar__avatar" />
-            ) : (
-              <div className="navbar__avatar navbar__avatar--initials">
-                {user?.firstName?.[0]}{user?.lastName?.[0]}
-              </div>
-            )}
-            <span className="navbar__user-name">{user?.firstName}</span>
+          {user ? (
+            <div className="navbar__user" onClick={() => setUserMenuOpen(!userMenuOpen)}>
+              {user.profileImageUrl ? (
+                <img src={user.profileImageUrl} alt={user.firstName} className="navbar__avatar" />
+              ) : (
+                <div className="navbar__avatar navbar__avatar--initials">
+                  {user.firstName?.[0]}{user.lastName?.[0]}
+                </div>
+              )}
+              <span className="navbar__user-name">{user.firstName}</span>
 
-            {userMenuOpen && (
-              <div className="navbar__user-menu">
-                <div className="navbar__user-menu-name">{user?.firstName} {user?.lastName}</div>
-                <div className="navbar__user-menu-email">{user?.email}</div>
-                <div className="navbar__user-menu-role">{user?.role}</div>
-                <button className="navbar__user-menu-logout" onClick={handleLogout}>
-                  Sign Out
-                </button>
-              </div>
-            )}
-          </div>
+              {userMenuOpen && (
+                <div className="navbar__user-menu">
+                  <div className="navbar__user-menu-name">{user.firstName} {user.lastName}</div>
+                  <div className="navbar__user-menu-email">{user.email}</div>
+                  <div className="navbar__user-menu-role">{user.role}</div>
+                  <button className="navbar__user-menu-logout" onClick={handleLogout}>
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link to="/login" className="navbar__cta">Sign In</Link>
+          )}
         </div>
 
         <button className="navbar__burger" onClick={() => setMenuOpen(!menuOpen)}>
@@ -89,9 +93,13 @@ export default function Navbar() {
         {links.map(l => (
           <Link key={l.to} to={l.to} className="navbar__mobile-link">{l.label}</Link>
         ))}
-        <button className="navbar__mobile-link" onClick={handleLogout}>
-          Sign Out ({user?.firstName})
-        </button>
+        {user ? (
+          <button className="navbar__mobile-link" onClick={handleLogout}>
+            Sign Out ({user.firstName})
+          </button>
+        ) : (
+          <Link to="/login" className="navbar__mobile-link">Sign In</Link>
+        )}
       </div>
     </nav>
   );

@@ -1,6 +1,6 @@
 // Components/ArtifactDetail.jsx
 import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { artifactsApi, commentsApi } from '../api/client';
 import { useFetch } from '../hooks/useFetch';
 import { useAuth } from '../context/AuthContext';
@@ -12,6 +12,7 @@ const FALLBACK = 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w
 
 export default function ArtifactDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { user } = useAuth();
 
   const { data: artifact, loading, error, refetch } = useFetch(
@@ -131,7 +132,7 @@ export default function ArtifactDetail() {
               </form>
             ) : (
               <p className="comment-signin-prompt">
-                <button onClick={() => document.querySelector('.navbar__cta')?.click()} className="text-link">
+                <button onClick={() => navigate('/login')} className="text-link">
                   Sign in
                 </button> to leave a comment.
               </p>

@@ -4,7 +4,7 @@
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { userApi } from '../api/client'
+import { auth, userApi } from '../api/client'
 
 const AuthContext = createContext(null)
 
@@ -43,13 +43,11 @@ export function AuthProvider({ children }) {
    */
   const logout = useCallback(async () => {
     try {
-      await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5126'}/api/auth/logout`, {
-        method: 'POST',
-        credentials: 'include',
-      })
+      await auth.logout()
     } catch {
-      // endpoint may not exist yet — that's fine
     }
+    localStorage.clear()
+    sessionStorage.clear()
     setUser(null)
   }, [])
 

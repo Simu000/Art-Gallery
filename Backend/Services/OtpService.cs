@@ -63,16 +63,46 @@ public class OtpService : IOtpService
             return null;
         }
 
+        if (otpRecord.UserId != user.Id)
+        {
+            _logger.LogWarning("OTP verify failed: user/email mismatch. ExpectedUserId={ExpectedUserId}, OtpUserId={OtpUserId}, Email={Email}", user.Id, otpRecord.UserId, normalizedEmail);
+            return null;
+        }
+
         if (otpRecord.IsUsed)
         {
             _logger.LogWarning("OTP verify failed: OTP already used. OtpId={OtpId}, UserId={UserId}", otpRecord.Id, otpRecord.UserId);
+            return null;
+        }
+
+        var expiryUtc = otpRecord.ExpiresAt.Kind == DateTimeKind.Utc
+            ? otpRecord.ExpiresAt
+            : DateTime.SpecifyKind(otpRecord.ExpiresAt, DateTimeKind.Utc);
+        var nowUtc = DateTime.UtcNow;
+        if (expiryUtc <= nowUtc)
+        {
+            _logger.LogWarning(
+                "OTP verify failed: expired. OtpId={OtpId}, StoredOtp={StoredOtp}, EnteredOtp={EnteredOtp}, ExpiresAtUtc={ExpiresAtUtc}, NowUtc={NowUtc}",
+                otpRecord.Id,
+                otpRecord.Otp,
+                normalizedOtp,
+                expiryUtc,
+                nowUtc
+            );
             return null;
         }
         
         // Check if OTP matches
         if (!string.Equals(otpRecord.Otp?.Trim(), normalizedOtp, StringComparison.Ordinal))
         {
-            _logger.LogWarning("OTP verify failed: mismatch. OtpId={OtpId}, EnteredLength={EnteredLength}, StoredLength={StoredLength}", otpRecord.Id, normalizedOtp.Length, otpRecord.Otp?.Trim().Length ?? 0);
+            _logger.LogWarning(
+                "OTP verify failed: mismatch. OtpId={OtpId}, StoredOtp={StoredOtp}, EnteredOtp={EnteredOtp}, ExpiresAtUtc={ExpiresAtUtc}, NowUtc={NowUtc}",
+                otpRecord.Id,
+                otpRecord.Otp?.Trim(),
+                normalizedOtp,
+                expiryUtc,
+                nowUtc
+            );
             return null;
         }
         

@@ -65,7 +65,11 @@ export default function Exhibitions() {
                 className={`exhibition-card exhibition-card--${status}`}
               >
                 <div className="exhibition-card__img-wrap">
-                  <img src={ex.coverImageUrl || FALLBACK} alt={ex.name} />
+                  <img
+                    src={ex.coverImageUrl || FALLBACK}
+                    alt={ex.name}
+                    onError={(e) => { e.currentTarget.src = FALLBACK }}
+                  />
                 </div>
                 <div className="exhibition-card__body">
                   <span className={`exhibition-card__status exhibition-card__status--${status}`}>

@@ -39,6 +39,8 @@ export const auth = {
   verifyOtpRegistration: (dto) => post('/api/auth/verify-otp-registration', dto),
 
   verifyOtpLogin: (dto) => post('/api/auth/verify-otp-login', dto),
+
+  logout: () => post('/api/auth/logout', {}),
 }
 
 export const userApi = {

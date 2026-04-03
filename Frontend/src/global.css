@@ -34,10 +34,24 @@ body {
   font-family: var(--font-body);
   background: var(--cream);
   color: var(--charcoal);
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.8;
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
 }
 
 h1, h2, h3 {
