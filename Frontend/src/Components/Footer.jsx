@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer__top">
         <div className="footer__brand">
-          <div className="footer__logo">Ngurini</div>
+          <div className="footer__logo">aborginal art gallery</div>
           <p className="footer__tagline">
             Dedicated to the world's oldest living artistic tradition.
             Located on the lands of the Gadigal people of the Eora Nation.
@@ -44,7 +44,7 @@ export default function Footer() {
       </div>
 
       <div className="footer__bottom">
-        <span>© 2025 Ngurini Gallery. All rights reserved.</span>
+        <span>© 2025 aborginal art gallery. All rights reserved.</span>
         <span>Built with respect for Country.</span>
       </div>
     </footer>

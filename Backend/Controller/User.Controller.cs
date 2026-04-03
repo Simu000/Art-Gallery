@@ -7,6 +7,9 @@ using aborginal_art_gallery.DTOs;
 
 [ApiController]
 [Route("api/user")]
+/// <summary>
+/// Handles user profile and administration endpoints.
+/// </summary>
 public class UserController : ControllerBase
 {
     private readonly IUserRepository _repo;
@@ -30,6 +33,10 @@ public class UserController : ControllerBase
     }
 
 
+    /// <summary>
+    /// Gets all users for admins.
+    /// </summary>
+    /// <returns>A list of users.</returns>
     [HttpGet]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> getAll()
@@ -38,6 +45,11 @@ public class UserController : ControllerBase
         return Ok(users);
     }
 
+    /// <summary>
+    /// Uploads the current user's profile image.
+    /// </summary>
+    /// <param name="file">Profile image file.</param>
+    /// <returns>Upload status with image URL.</returns>
     [Authorize]
     [HttpPost("me/profile-image")]
     public async Task<IActionResult> uploadImage([FromForm] IFormFile file)
@@ -66,6 +78,10 @@ public class UserController : ControllerBase
     }
 
 
+    /// <summary>
+    /// Gets the currently authenticated user profile.
+    /// </summary>
+    /// <returns>The current user data.</returns>
     [Authorize]                  
     [HttpGet("me")]                
     public async Task<IActionResult> GetCurrentUser()

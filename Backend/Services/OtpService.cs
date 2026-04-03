@@ -5,11 +5,32 @@ namespace aborginal_art_gallery.Services;
 
 public interface IOtpService
 {
+    /// <summary>
+    /// Generates a numeric one-time password.
+    /// </summary>
+    /// <returns>A six-digit OTP code.</returns>
     string GenerateOtpCode();
+    /// <summary>
+    /// Creates and sends OTP for the specified purpose.
+    /// </summary>
+    /// <param name="email">Target email address.</param>
+    /// <param name="userId">Target user identifier.</param>
+    /// <param name="purpose">OTP purpose.</param>
+    /// <returns>A task representing the async operation.</returns>
     Task SendOtpAsync(string email, int userId, string purpose);
+    /// <summary>
+    /// Validates an OTP for email and purpose.
+    /// </summary>
+    /// <param name="email">Target email address.</param>
+    /// <param name="otp">OTP value provided by user.</param>
+    /// <param name="purpose">OTP purpose.</param>
+    /// <returns>OTP record when valid; otherwise null.</returns>
     Task<UserOtp?> ValidateOtpAsync(string email, string otp, string purpose);
 }
 
+/// <summary>
+/// Provides OTP generation, delivery, and validation.
+/// </summary>
 public class OtpService : IOtpService
 {
     private readonly IOtpRepository _otpRepo;
@@ -25,11 +46,13 @@ public class OtpService : IOtpService
         _logger = logger;
     }
     
+    /// <inheritdoc />
     public string GenerateOtpCode()
     {
         return Random.Shared.Next(100000, 999999).ToString();
     }
 
+    /// <inheritdoc />
     public async Task SendOtpAsync(string email, int userId, string purpose)
     {
         string otp = GenerateOtpCode();
@@ -38,6 +61,7 @@ public class OtpService : IOtpService
         await _emailService.SendOtpEmailAsync(email, otp, purpose);
     }
 
+    /// <inheritdoc />
     public async Task<UserOtp?> ValidateOtpAsync(string email, string otp, string purpose)
     {
         var normalizedEmail = email.Trim();

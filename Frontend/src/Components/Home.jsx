@@ -87,7 +87,7 @@ export default function Home() {
         <div className="page-container">
           <div className="about-strip__inner">
             <div className="about-strip__left">
-              <span className="section-label">About Ngurini</span>
+              <span className="section-label">About aborginal art gallery</span>
               <h2 className="about-strip__heading">
                 A space where the<br />
                 <em>world's oldest stories</em><br />
@@ -96,7 +96,7 @@ export default function Home() {
             </div>
             <div className="about-strip__right">
               <p>
-                Ngurini — meaning "to look, to see" in Anangu — is dedicated to presenting
+                aborginal art gallery is dedicated to presenting
                 Aboriginal art with the depth, context, and care it deserves. We work directly
                 with artists and communities to build a collection that is both extraordinary
                 and ethically grounded.

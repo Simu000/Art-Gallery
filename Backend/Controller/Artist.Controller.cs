@@ -11,6 +11,9 @@ using aborginal_art_gallery.Models;
 [ApiController]
 [Route("api/artists")]
 
+/// <summary>
+/// Manages artist CRUD endpoints.
+/// </summary>
 public class ArtistController : ControllerBase
 {
     private readonly IArtistRepository _repo;
@@ -24,10 +27,19 @@ public class ArtistController : ControllerBase
 
     private int CurrentUserId => int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
+    /// <summary>
+    /// Gets all artists.
+    /// </summary>
+    /// <returns>A list of artists.</returns>
     [HttpGet]
     [AllowAnonymous]
     public async Task<IActionResult> getAll() => Ok(await _repo.getAllArtists());
 
+    /// <summary>
+    /// Gets one artist by identifier.
+    /// </summary>
+    /// <param name="id">The artist identifier.</param>
+    /// <returns>The artist when found.</returns>
     [HttpGet("{id}")]
     [AllowAnonymous]
 
@@ -38,6 +50,11 @@ public class ArtistController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Creates a new artist.
+    /// </summary>
+    /// <param name="dto">The artist payload.</param>
+    /// <returns>The created artist.</returns>
     [HttpPost]
     [Authorize(Roles = "Admin")]
 
@@ -66,6 +83,12 @@ public class ArtistController : ControllerBase
         return CreatedAtAction(nameof(getById), new { id = created.Id }, created);
     }
 
+    /// <summary>
+    /// Updates an artist by identifier.
+    /// </summary>
+    /// <param name="id">The artist identifier.</param>
+    /// <param name="dto">The artist payload.</param>
+    /// <returns>The updated artist when successful.</returns>
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
 
@@ -94,6 +117,11 @@ public class ArtistController : ControllerBase
         
     }
 
+    /// <summary>
+    /// Deletes an artist by identifier.
+    /// </summary>
+    /// <param name="id">The artist identifier.</param>
+    /// <returns>No content when deleted.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin")]
 

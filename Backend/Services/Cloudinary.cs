@@ -5,9 +5,18 @@ namespace aborginal_art_gallery.Services;
 
 public interface ICloudinaryService
 {
+    /// <summary>
+    /// Uploads an image to Cloudinary for a user scope.
+    /// </summary>
+    /// <param name="file">Image file to upload.</param>
+    /// <param name="userId">Current user identifier.</param>
+    /// <returns>Secure image URL.</returns>
     Task<string> UploadImageAsync(IFormFile file, int userId);
 }
 
+/// <summary>
+/// Wraps Cloudinary image upload operations.
+/// </summary>
 public class CloudinaryService : ICloudinaryService
 {
     private readonly Cloudinary _cloudinary;
@@ -22,6 +31,7 @@ public class CloudinaryService : ICloudinaryService
         _cloudinary = new Cloudinary(account);
     }
 
+    /// <inheritdoc />
     public async Task<string> UploadImageAsync(IFormFile file, int userId)
     {
         if (file.Length > 5 * 1024 * 1024) 

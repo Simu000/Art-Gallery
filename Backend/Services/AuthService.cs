@@ -9,6 +9,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace aborginal_art_gallery.Services;
 
+/// <summary>
+/// Implements registration, login, OTP verification, and JWT issuance.
+/// </summary>
 public class AuthService : IAuthService
 {
     private readonly IUserRepository _userRepo;
@@ -26,6 +29,7 @@ public class AuthService : IAuthService
         _otpRepo = otprepo;
     }
 
+    /// <inheritdoc />
     public async Task<RegisterReponseDto?> RegisterAsync(RegisterDto dto)
     {
         if (await _userRepo.getUserByEmail(dto.Email) != null) return null;
@@ -58,6 +62,7 @@ public class AuthService : IAuthService
         };
     }
 
+    /// <inheritdoc />
     public async Task<LoginResponseDto?> LoginAsync(LoginDto dto)
     {
         var user = await _userRepo.getUserByEmail(dto.Email);
@@ -75,6 +80,7 @@ public class AuthService : IAuthService
         };
     }
 
+    /// <inheritdoc />
     public async Task<VerifyOtpResponseDto> VerifyRegistrationOtpAsync(VerifyOtpDto dto)
     {
         var email = dto.email.Trim();
@@ -112,6 +118,7 @@ public class AuthService : IAuthService
         };
     }
 
+    /// <inheritdoc />
     public async Task<VerifyOtpResponseDto> VerifyLoginOtpAsync(VerifyOtpDto dto)
     {
         var email = dto.email.Trim();
@@ -148,6 +155,7 @@ public class AuthService : IAuthService
         };
     }
 
+    /// <inheritdoc />
     public string GenerateJwtToken(User user)
     {
         var claims = new[]

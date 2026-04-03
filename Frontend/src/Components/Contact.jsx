@@ -73,7 +73,7 @@ export default function Contact() {
               <span className="contact-info__label">Contact</span>
               <p className="contact-info__value">
                 +61 2 9241 5555<br />
-                info@ngurinigallery.com.au
+                info@aborginalartgallery.com.au
               </p>
             </div>
             <div className="contact-info__item">

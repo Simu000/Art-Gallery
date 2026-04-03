@@ -77,7 +77,7 @@ export default function Login() {
         <div className="auth-card fade-up">
 
           <div className="auth-card__top">
-            <span className="section-label">Ngurini</span>
+            <span className="section-label">aborginal art gallery</span>
             <h1 className="auth-card__title">Sign In</h1>
             <p className="auth-card__subtitle">
               {otpStep

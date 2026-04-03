@@ -1,6 +1,9 @@
 using MailKit.Net.Smtp;
 using MimeKit;
 
+/// <summary>
+/// Sends transactional emails through SMTP.
+/// </summary>
 public class EmailService : IEmailService
 {
     private readonly IConfiguration _config;
@@ -10,10 +13,11 @@ public class EmailService : IEmailService
         _config = config;
     }
 
+    /// <inheritdoc />
     public async Task SendOtpEmailAsync(string toEmail, string Otp, string purpose)
     {
         var message = new MimeMessage();
-        message.From.Add(new MailboxAddress("Aborginal Art Gallery", _config["Email:From"]));
+        message.From.Add(new MailboxAddress("aborginal art gallery", _config["Email:From"]));
         message.To.Add(new MailboxAddress("", toEmail));
 
         message.Subject = $"Your {purpose} Otp Code";
@@ -48,7 +52,7 @@ public class EmailService : IEmailService
                 </p>
 
                 <p style='font-size:12px; color:#aaa;'>
-                    © Aborginal Art Gallery
+                    © aborginal art gallery
                 </p>
 
             </div>

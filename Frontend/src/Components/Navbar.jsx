@@ -42,8 +42,8 @@ export default function Navbar() {
     <nav className={`navbar ${scrolled || !isHome ? 'navbar--solid' : ''} ${menuOpen ? 'navbar--open' : ''}`}>
       <div className="navbar__inner">
         <Link to="/" className="navbar__logo">
-          <span className="navbar__logo-text">Ngurini</span>
-          <span className="navbar__logo-sub">Aboriginal Art Gallery</span>
+          <span className="navbar__logo-text">aborginal art gallery</span>
+          <span className="navbar__logo-sub">{'\u00A0'}</span>
         </Link>
 
         <div className="navbar__links">

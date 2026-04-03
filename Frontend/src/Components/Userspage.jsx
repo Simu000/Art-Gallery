@@ -26,7 +26,7 @@ export default function UsersPage() {
         <div className="page-container">
           <span className="section-label fade-up">Community</span>
           <h1 className="page-hero-thin__title fade-up delay-1">
-            Our Gallery<br /><em>Community</em>
+            aborginal art gallery<br /><em>Community</em>
           </h1>
           <p className="page-hero-thin__desc fade-up delay-2">
             A growing community of people who believe in the power of Aboriginal

@@ -139,7 +139,7 @@ export function OAuthCallback() {
         color: 'var(--gold)',
         letterSpacing: '0.06em',
       }}>
-        Ngurini
+        aborginal art gallery
       </div>
       <p style={{ fontSize: '13px', color: 'var(--gray)', letterSpacing: '0.1em' }}>
         Signing you in…

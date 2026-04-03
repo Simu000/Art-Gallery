@@ -14,6 +14,9 @@ namespace aborginal_art_gallery.Controllers;
 [ApiController]
 [Route("api/artifacts")]
 
+/// <summary>
+/// Manages artifact endpoints.
+/// </summary>
 public class ArtifactController : ControllerBase
 {
     private readonly IArtifactRepository _repo;
@@ -26,6 +29,10 @@ public class ArtifactController : ControllerBase
         _cloudinaryService = cloudinaryService;
     }
 
+    /// <summary>
+    /// Gets all artifacts.
+    /// </summary>
+    /// <returns>A list of artifacts.</returns>
     [HttpGet]
     [AllowAnonymous]
     public async Task<IActionResult> getAll()
@@ -34,6 +41,11 @@ public class ArtifactController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Gets one artifact by identifier.
+    /// </summary>
+    /// <param name="id">The artifact identifier.</param>
+    /// <returns>The artifact when found.</returns>
     [HttpGet("{id}")]
     [AllowAnonymous]
     public async Task<IActionResult> getById(int id)
@@ -42,6 +54,11 @@ public class ArtifactController : ControllerBase
         return artifact != null ? Ok(artifact) : NotFound();
     }
 
+    /// <summary>
+    /// Searches artifacts by a keyword.
+    /// </summary>
+    /// <param name="q">The search keyword.</param>
+    /// <returns>Matching artifacts or all artifacts when query is empty.</returns>
     [HttpGet("search")]
     [AllowAnonymous]
     public async Task<IActionResult> Search([FromQuery] string q)
@@ -50,10 +67,19 @@ public class ArtifactController : ControllerBase
         return Ok(await _repo.SearchAsync(q));
     }
 
+    /// <summary>
+    /// Gets art facts.
+    /// </summary>
+    /// <returns>A list of art facts.</returns>
     [HttpGet("facts")]
     [AllowAnonymous]
     public async Task<IActionResult> getArtFacts() => Ok(await _repo.GetArtFactsAsync());
 
+    /// <summary>
+    /// Creates a new artifact.
+    /// </summary>
+    /// <param name="dto">The artifact payload.</param>
+    /// <returns>The created artifact.</returns>
     [Authorize(Roles = "Admin")]
     [HttpPost]
 
@@ -82,6 +108,12 @@ public class ArtifactController : ControllerBase
 
     }
 
+    /// <summary>
+    /// Updates an artifact by identifier.
+    /// </summary>
+    /// <param name="id">The artifact identifier.</param>
+    /// <param name="dto">The updated artifact payload.</param>
+    /// <returns>The updated artifact when successful.</returns>
     [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromForm]CreateArtifactDto dto)
@@ -107,6 +139,11 @@ public class ArtifactController : ControllerBase
         return success ? Ok(existing) : BadRequest();
     }
 
+    /// <summary>
+    /// Deletes an artifact by identifier.
+    /// </summary>
+    /// <param name="id">The artifact identifier.</param>
+    /// <returns>No content when deleted.</returns>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin")]
 

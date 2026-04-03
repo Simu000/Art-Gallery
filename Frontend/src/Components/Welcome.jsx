@@ -11,10 +11,10 @@ export default function Welcome() {
       <div className="welcome-container">
         <div className="welcome-card fade-up">
 
-          <span className="section-label">Aboriginal Art Gallery</span>
+          <span className="section-label">aborginal art gallery</span>
 
           <h1 className="welcome-card__title">
-            Welcome to the <em>Ngurini</em>
+            Welcome to the <em>aborginal art gallery</em>
           </h1>
 
           <p className="welcome-card__subtitle">

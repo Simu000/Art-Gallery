@@ -84,12 +84,12 @@ export default function Signin() {
         <div className="auth-card fade-up">
 
           <div className="auth-card__top">
-            <span className="section-label">Kala Sangam Gallery</span>
+            <span className="section-label">aborginal art gallery</span>
             <h1 className="auth-card__title">Create Account</h1>
             <p className="auth-card__subtitle">
               {otpStep
                 ? "Enter the OTP sent to your email to verify your account."
-                : "Join the Ngurini. Explore art, connect with artists."}
+                : "Join aborginal art gallery. Explore art, connect with artists."}
             </p>
           </div>
 

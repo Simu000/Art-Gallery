@@ -88,7 +88,7 @@ export default function AuthModal({ onClose }) {
         {/* ── OTP verification step ─────────────────────────────────────── */}
         {(step === 'otp-login' || step === 'otp-register') && (
           <form className="modal__form" onSubmit={handleVerifyOtp}>
-            <div className="modal__logo">Ngurini</div>
+            <div className="modal__logo">aborginal art gallery</div>
             <h2 className="modal__title">Verify your email</h2>
             <p className="modal__sub">{message}</p>
 
@@ -123,7 +123,7 @@ export default function AuthModal({ onClose }) {
         {/* ── Login step ───────────────────────────────────────────────── */}
         {step === 'login' && (
           <form className="modal__form" onSubmit={handleLogin}>
-            <div className="modal__logo">Ngurini</div>
+            <div className="modal__logo">aborginal art gallery</div>
             <h2 className="modal__title">Welcome back</h2>
             <p className="modal__sub">Sign in to your account</p>
 
@@ -151,7 +151,7 @@ export default function AuthModal({ onClose }) {
         {/* ── Register step ────────────────────────────────────────────── */}
         {step === 'register' && (
           <form className="modal__form" onSubmit={handleRegister}>
-            <div className="modal__logo">Ngurini</div>
+            <div className="modal__logo">aborginal art gallery</div>
             <h2 className="modal__title">Create an account</h2>
             <p className="modal__sub">Join our community of art lovers</p>
 
