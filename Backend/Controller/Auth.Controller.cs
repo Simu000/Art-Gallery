@@ -4,8 +4,6 @@ using aborginal_art_gallery.DTOs;
 using aborginal_art_gallery.Models;
 using aborginal_art_gallery.Repositories;
 using aborginal_art_gallery.Services;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -129,83 +127,7 @@ public class AuthController : ControllerBase
         return Ok(new { message = "Logged out successfully" });
     }
 
-    /// <summary>
-    /// Starts Google OAuth authentication flow.
-    /// </summary>
-    /// <returns>OAuth challenge response.</returns>
-    [HttpGet("google")]
-    public IActionResult GoogleLogin()
-    {
-        var googleClientId = _configuration["Authentication:Google:ClientId"];
-        var googleClientSecret = _configuration["Authentication:Google:ClientSecret"];
-        var frontendBaseUrl = _configuration["Frontend:BaseUrl"] ?? "http://localhost:5173";
-        if (string.IsNullOrWhiteSpace(googleClientId) || string.IsNullOrWhiteSpace(googleClientSecret))
-        {
-            return Redirect($"{frontendBaseUrl}/login?error=google_not_configured");
-        }
 
-        var callbackUrl = Url.Action(nameof(GoogleCallback), "Auth", null, Request.Scheme);
-        var properties = new AuthenticationProperties
-        {
-            RedirectUri = callbackUrl
-        };
-
-        return Challenge(properties, GoogleDefaults.AuthenticationScheme);
-    }
-
-    /// <summary>
-    /// Handles Google OAuth callback and signs user in.
-    /// </summary>
-    /// <returns>Redirect response to frontend callback.</returns>
-    [HttpGet("google/callback")]
-    public async Task<IActionResult> GoogleCallback()
-    {
-        var frontendBaseUrl = _configuration["Frontend:BaseUrl"] ?? "http://localhost:5173";
-        var authResult = await HttpContext.AuthenticateAsync("External");
-
-        if (!authResult.Succeeded || authResult.Principal == null)
-        {
-            return Redirect($"{frontendBaseUrl}/login?error=oauth_failed");
-        }
-
-        var email = authResult.Principal.FindFirstValue(ClaimTypes.Email);
-        if (string.IsNullOrWhiteSpace(email))
-        {
-            await HttpContext.SignOutAsync("External");
-            return Redirect($"{frontendBaseUrl}/login?error=oauth_failed");
-        }
-
-        var firstName = authResult.Principal.FindFirstValue(ClaimTypes.GivenName)
-            ?? authResult.Principal.FindFirstValue(ClaimTypes.Name)
-            ?? email.Split('@')[0];
-        var lastName = authResult.Principal.FindFirstValue(ClaimTypes.Surname) ?? string.Empty;
-
-        var user = await _userRepository.getUserByEmail(email);
-        if (user == null)
-        {
-            user = await _userRepository.CreateUser(new User
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                Email = email,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(Guid.NewGuid().ToString("N")),
-                Role = "User"
-            });
-            await _otpRepository.MarkUserAsVerified(user.Id);
-            user.IsEmailVerified = true;
-        }
-        else if (!user.IsEmailVerified)
-        {
-            await _otpRepository.MarkUserAsVerified(user.Id);
-            user.IsEmailVerified = true;
-        }
-
-        var token = _authService.GenerateJwtToken(user);
-        SetJwtCookie(token);
-        await HttpContext.SignOutAsync("External");
-
-        return Redirect($"{frontendBaseUrl}/auth/callback");
-    }
 
 
 

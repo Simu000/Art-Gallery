@@ -3,7 +3,6 @@ using aborginal_art_gallery.Data;
 using aborginal_art_gallery.Repositories;
 using aborginal_art_gallery.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -68,13 +67,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 return Task.CompletedTask;
             }
         };
-    })
-    .AddCookie("External");
+    });
    
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddContrḍḍollers().AddXmlDataContractSerializerFormatters();
+builder.Services.AddControllers().AddXmlDataContractSerializerFormatters();
 builder.Services.AddSwaggerGen(options =>
 {
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
