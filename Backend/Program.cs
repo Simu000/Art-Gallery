@@ -69,18 +69,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             }
         };
     })
-    .AddCookie("External")
-    .AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
-    {
-        options.ClientId = builder.Configuration["Authentication:Google:ClientId"] ?? string.Empty;
-        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"] ?? string.Empty;
-        options.CallbackPath = "/api/auth/google/callback";
-        options.SignInScheme = "External";
-    });
+    .AddCookie("External");
+   
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddControllers().AddXmlDataContractSerializerFormatters();
+builder.Services.AddContrḍḍollers().AddXmlDataContractSerializerFormatters();
 builder.Services.AddSwaggerGen(options =>
 {
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
