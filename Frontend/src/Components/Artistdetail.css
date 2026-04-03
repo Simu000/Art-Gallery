@@ -1,0 +1,204 @@
+.artist-detail__hero {
+  position: relative;
+  height: 70vh;
+  min-height: 500px;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 80px;
+  margin-bottom: 80px;
+}
+
+.artist-detail__hero-img-wrap {
+  position: absolute;
+  inset: 0;
+}
+
+.artist-detail__hero-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.artist-detail__hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(20,18,14,0.88) 0%, rgba(20,18,14,0.2) 60%, transparent 100%);
+}
+
+.artist-detail__hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 60px;
+  width: 100%;
+}
+
+.back-link {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 24px;
+  transition: color 0.2s;
+}
+
+.back-link:hover { color: var(--gold); }
+
+.artist-detail__hero-tribe {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 12px;
+}
+
+.artist-detail__hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 6vw, 80px);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.artist-detail__hero-region {
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.5);
+}
+
+/* Body */
+.artist-detail__body {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 80px;
+  padding-bottom: 120px;
+}
+
+.artist-detail__bio-col {
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+
+.artist-detail__bio {
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--charcoal-mid);
+  margin: 20px 0 32px;
+}
+
+.artist-detail__tags {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--border-light);
+}
+
+.artist-tag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.artist-tag__label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.artist-tag__value {
+  font-size: 13px;
+  color: var(--charcoal);
+  text-align: right;
+  max-width: 160px;
+}
+
+.artist-works-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.artist-work-card {
+  display: block;
+  cursor: pointer;
+}
+
+.artist-work-card__img-wrap {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.artist-work-card__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.artist-work-card:hover img {
+  transform: scale(1.05);
+}
+
+.artist-work-card__sold {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--charcoal);
+  color: var(--white);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+}
+
+.artist-work-card__info {
+  padding: 12px 0 0;
+}
+
+.artist-work-card__title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--charcoal);
+  margin-bottom: 4px;
+  transition: color 0.2s;
+}
+
+.artist-work-card:hover .artist-work-card__title {
+  color: var(--gold);
+}
+
+.artist-work-card__year {
+  font-size: 11px;
+  color: var(--gray);
+}
+
+.artist-detail__no-works {
+  font-size: 14px;
+  color: var(--gray);
+  font-style: italic;
+  margin-top: 20px;
+}
+
+.not-found {
+  padding: 200px 60px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--gray);
+}
+
+@media (max-width: 900px) {
+  .artist-detail__body { grid-template-columns: 1fr; gap: 40px; }
+  .artist-detail__bio-col { position: static; }
+  .artist-works-grid { grid-template-columns: 1fr; }
+  .artist-detail__hero-content { padding: 0 24px; }
+}
