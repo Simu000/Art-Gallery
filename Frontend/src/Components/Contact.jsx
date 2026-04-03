@@ -146,17 +146,6 @@ export default function Contact() {
         </div>
       </div>
 
-      <div className="contact-map">
-        <iframe
-          title="Gallery Location"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3312.345678901234!2d151.2089!3d-33.8591!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12ae4e4b4b4b4b%3A0x1234567890abcdef!2sThe%20Rocks%2C%20Sydney!5e0!3m2!1sen!2sau!4v1234567890123!5m2!1sen!2sau"
-          width="100%"
-          height="400"
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-        />
-      </div>
     </main>
   );
 }
