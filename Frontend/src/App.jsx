@@ -1,136 +1,65 @@
-// App.jsx
-import { Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+// App.jsx  — UPDATED
+// Place this file at: Frontend/src/App.jsx
+// Changes from original:
+//   1. Added imports for Welcome, Login, Signin Components
+//   2. Added import for OAuthCallback from AuthContext
+//   3. Added routes: /welcome, /login, /signin, /auth/callback
+//   4. Wrapped routes so Navbar/Footer are hidden on auth Components
+
+import { Routes, Route, useLocation } from "react-router-dom";
+import { AuthProvider, OAuthCallback } from "./context/AuthContext";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
-import Landing from "./Components/Landing";
 import Home from "./Components/Home";
 import Artists from "./Components/Artists";
 import ArtistDetail from "./Components/Artistdetail";
 import Artifacts from "./Components/Artifacts";
-import ArtifactDetail from "./Components/Artifactdetail";
+import ArtifactDetail from "./Components/Artifacts";
 import Exhibitions from "./Components/Exhibitions";
-import ExhibitionDetail from "./Components/ExhibitionDetail";
+import ExhibitionDetail from "./Components/Exhibitiondetail";
 import UsersPage from "./Components/UsersPage";
-import Contact from "./Components/Contact";
 
-// Protected Route Component
-function ProtectedRoute({ children }) {
-  const { user, loading } = useAuth();
+// New auth Components
+import Welcome from "./Components/Welcome";
+import Login from "./Components/Login";
+import Signin from "./Components/Signin";
 
-  if (loading) return null;
+// Routes where Navbar + Footer should NOT appear
+const AUTH_ROUTES = ['/welcome', '/login', '/signin', '/auth/callback']
 
-  if (!user) {
-    return <Navigate to="/" replace />;
-  }
-
-  return children;
-}
-
-function AppRoutes() {
-  const { user, loading } = useAuth();
-
-  if (loading) return null;
+function Layout() {
+  const { pathname } = useLocation()
+  const isAuthPage = AUTH_ROUTES.includes(pathname)
 
   return (
-    <Routes>
-      {/* Landing page - accessible to everyone */}
-      <Route path="/" element={<Landing />} />
+    <>
+      {!isAuthPage && <Navbar />}
+      <Routes>
+        {/* ── Auth Components (no Navbar/Footer) ─────────────────────────── */}
+        <Route path="/welcome"        element={<Welcome />} />
+        <Route path="/login"          element={<Login />} />
+        <Route path="/signin"         element={<Signin />} />
+        <Route path="/auth/callback"  element={<OAuthCallback />} />
 
-      {/* Protected routes - require authentication */}
-      <Route
-        path="/home"
-        element={
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/artists"
-        element={
-          <ProtectedRoute>
-            <Artists />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/artists/:id"
-        element={
-          <ProtectedRoute>
-            <ArtistDetail />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/artifacts"
-        element={
-          <ProtectedRoute>
-            <Artifacts />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/artifacts/:id"
-        element={
-          <ProtectedRoute>
-            <ArtifactDetail />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/exhibitions"
-        element={
-          <ProtectedRoute>
-            <Exhibitions />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/exhibitions/:id"
-        element={
-          <ProtectedRoute>
-            <ExhibitionDetail />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/community"
-        element={
-          <ProtectedRoute>
-            <UsersPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/contact"
-        element={
-          <ProtectedRoute>
-            <Contact />
-          </ProtectedRoute>
-        }
-      />
-    </Routes>
-  );
+        {/* ── Main app Components ────────────────────────────────────────── */}
+        <Route path="/"               element={<Home />} />
+        <Route path="/artists"        element={<Artists />} />
+        <Route path="/artists/:id"    element={<ArtistDetail />} />
+        <Route path="/artifacts"      element={<Artifacts />} />
+        <Route path="/artifacts/:id"  element={<ArtifactDetail />} />
+        <Route path="/exhibitions"    element={<Exhibitions />} />
+        <Route path="/exhibitions/:id" element={<ExhibitionDetail />} />
+        <Route path="/community"      element={<UsersPage />} />
+      </Routes>
+      {!isAuthPage && <Footer />}
+    </>
+  )
 }
 
 export default function App() {
   return (
     <AuthProvider>
-      <AppContent />
+      <Layout />
     </AuthProvider>
-  );
-}
-
-function AppContent() {
-  const { user } = useAuth();
-  const isLandingPage = window.location.pathname === "/";
-
-  return (
-    <>
-      {user && !isLandingPage && <Navbar />}
-      <AppRoutes />
-      {user && !isLandingPage && <Footer />}
-    </>
   );
 }
