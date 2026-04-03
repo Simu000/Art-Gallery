@@ -64,7 +64,7 @@ public class OtpService : IOtpService
     /// <inheritdoc />
     public async Task<UserOtp?> ValidateOtpAsync(string email, string otp, string purpose)
     {
-        var normalizedEmail = email.Trim();
+        var normalizedEmail = email.Trim().ToLower();
         var normalizedOtp = otp.Trim();
 
         var user = await _userRepo.getUserByEmail(normalizedEmail);
@@ -108,7 +108,7 @@ public class OtpService : IOtpService
             _logger.LogWarning(
                 "OTP verify failed: expired. OtpId={OtpId}, StoredOtp={StoredOtp}, EnteredOtp={EnteredOtp}, ExpiresAtUtc={ExpiresAtUtc}, NowUtc={NowUtc}",
                 otpRecord.Id,
-                otpRecord.Otp,
+                string.IsNullOrEmpty(otpRecord.Otp) ? "NULL_OR_EMPTY" : otpRecord.Otp,
                 normalizedOtp,
                 expiryUtc,
                 nowUtc
@@ -116,13 +116,29 @@ public class OtpService : IOtpService
             return null;
         }
         
-        // Check if OTP matches
-        if (!string.Equals(otpRecord.Otp?.Trim(), normalizedOtp, StringComparison.Ordinal))
+        // Ensure OTP value is not null or empty
+        if (string.IsNullOrEmpty(otpRecord.Otp))
         {
             _logger.LogWarning(
-                "OTP verify failed: mismatch. OtpId={OtpId}, StoredOtp={StoredOtp}, EnteredOtp={EnteredOtp}, ExpiresAtUtc={ExpiresAtUtc}, NowUtc={NowUtc}",
+                "OTP verify failed: OTP value is null or empty in database. OtpId={OtpId}, UserId={UserId}",
                 otpRecord.Id,
-                otpRecord.Otp?.Trim(),
+                otpRecord.UserId
+            );
+            return null;
+        }
+        
+        // Normalize stored OTP: trim and convert to string in case of database type conversion
+        string storedOtpNormalized = otpRecord.Otp.Trim();
+        
+        // Check if OTP matches (case-sensitive for numeric strings)
+        if (!string.Equals(storedOtpNormalized, normalizedOtp, StringComparison.Ordinal))
+        {
+            _logger.LogWarning(
+                "OTP verify failed: mismatch. OtpId={OtpId}, StoredOtpLength={StoredOtpLength}, EnteredOtpLength={EnteredOtpLength}, StoredOtp={StoredOtp}, EnteredOtp={EnteredOtp}, ExpiresAtUtc={ExpiresAtUtc}, NowUtc={NowUtc}",
+                otpRecord.Id,
+                storedOtpNormalized.Length,
+                normalizedOtp.Length,
+                storedOtpNormalized,
                 normalizedOtp,
                 expiryUtc,
                 nowUtc

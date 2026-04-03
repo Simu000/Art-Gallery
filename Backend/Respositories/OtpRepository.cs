@@ -1,5 +1,6 @@
 using Dapper;
 using aborginal_art_gallery.Data;
+
 /// <summary>
 /// Provides data access operations for OTP records.
 /// </summary>
@@ -46,22 +47,22 @@ public class OtpRepository : IOtpRepository
     {
         _context = context;
     }
+
     /// <inheritdoc />
     public async Task<UserOtp?> GetLatestOtpByUserEmail(string email, string purpose)
     {
-        var query = @"SELECT id, user_id, otp, expires_at, is_used, created_at, email, purpose
+        var query = @"SELECT id, user_id as UserId, otp, expires_at as ExpiresAt, is_used as IsUsed, created_at as CreatedAt, email, purpose
                       FROM user_otps 
                       WHERE LOWER(email) = LOWER(@Email) 
                         AND purpose = @Purpose 
                         AND is_used = FALSE
-                      ORDER BY
-                      created_at DESC LIMIT 1";
-        
+                      ORDER BY created_at DESC LIMIT 1";
+
         using var conn = _context.CreateConnection();
         return await conn.QueryFirstOrDefaultAsync<UserOtp>(query, new
         {
-           Email = email,
-           Purpose = purpose
+            Email = email,
+            Purpose = purpose
         });
     }
 
@@ -84,23 +85,9 @@ public class OtpRepository : IOtpRepository
     /// <inheritdoc />
     public async Task saveOtp(int userId, string otp, string purpose, string email)
     {
-        var query = @"INSERT INTO user_otps (user_id, otp, purpose, email, expires_at, is_used)
-                      VALUES (@userId, @otp, @purpose, @email, NOW() + INTERVAL '5 minutes', FALSE)";
+        var query = @"INSERT INTO user_otps (user_id, otp, purpose, email, expires_at, is_used, created_at)
+                      VALUES (@user_id, @otp, @purpose, @email, NOW() + INTERVAL '5 minutes', FALSE, NOW())";
         using var conn = _context.CreateConnection();
-        await conn.ExecuteAsync(query, new { userId, otp, purpose, email });
+        await conn.ExecuteAsync(query, new { user_id = userId, otp, purpose, email });
     }
-
-
-    // public async Task<bool> ValidateOtp(int userId, string otp)
-    // {
-    //     var query = "SELECT 1 FROM user_otps WHERE user_id = @userId AND otp = @otp AND expires_at > NOW() AND is_used = false";
-    //     using var conn = _context.CreateConnection();
-    //     var exists = await conn.ExecuteScalarAsync<bool>(query, new { userId, otp });
-
-    //     if (exists)
-    //     {
-    //         await conn.ExecuteAsync("UPDATE user_otps SET is_used = true WHERE user_id = @userId AND otp = @otp", new { userId, otp });
-    //     }
-    //     return exists;
-    // }
 }

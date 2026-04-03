@@ -501,18 +501,6 @@
             </summary>
             <returns>Logout confirmation.</returns>
         </member>
-        <member name="M:AuthController.GoogleLogin">
-            <summary>
-            Starts Google OAuth authentication flow.
-            </summary>
-            <returns>OAuth challenge response.</returns>
-        </member>
-        <member name="M:AuthController.GoogleCallback">
-            <summary>
-            Handles Google OAuth callback and signs user in.
-            </summary>
-            <returns>Redirect response to frontend callback.</returns>
-        </member>
         <member name="M:UserController.getAll">
             <summary>
             Gets all users for admins.
