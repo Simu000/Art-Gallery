@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
-import { AuthProvider, OAuthCallback } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 import { useAuth } from "./context/AuthContext";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
@@ -46,7 +46,6 @@ function Layout() {
           <Route path="/welcome"        element={<PublicOnlyRoute><Welcome /></PublicOnlyRoute>} />
           <Route path="/login"          element={<PublicOnlyRoute><Login /></PublicOnlyRoute>} />
           <Route path="/signin"         element={<PublicOnlyRoute><Signin /></PublicOnlyRoute>} />
-          <Route path="/auth/callback"  element={<OAuthCallback />} />
           <Route path="/"               element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/artists"        element={<ProtectedRoute><Artists /></ProtectedRoute>} />
           <Route path="/artists/:id"    element={<ProtectedRoute><ArtistDetail /></ProtectedRoute>} />
