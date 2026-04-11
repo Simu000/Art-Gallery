@@ -1,0 +1,8 @@
+/* ── Signin.css ── */
+/* All shared auth styles live in Login.css */
+@import "./Login.css";
+
+/* Signin has 4 fields so tighten the gap slightly */
+.auth-form {
+  gap: 14px;
+}
