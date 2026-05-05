@@ -9,6 +9,7 @@ import ArtistDetail from "./Components/Artistdetail";
 import Artifacts from "./Components/Artifacts";
 import ArtifactDetail from "./Components/Artifactdetail";
 import Exhibitions from "./Components/Exhibitions";
+import AdminDashboard from "./Components/AdminDashboard";
 import ExhibitionDetail from "./Components/Exhibitiondetail";
 
 import UsersPage from "./Components/UsersPage";
@@ -55,6 +56,7 @@ function Layout() {
           <Route path="/exhibitions/:id" element={<ProtectedRoute><ExhibitionDetail /></ProtectedRoute>} />
           <Route path="/community"      element={<ProtectedRoute><UsersPage /></ProtectedRoute>} />
           <Route path="/contact"        element={<ProtectedRoute><Contact /></ProtectedRoute>} />
+          <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
           <Route path="*"               element={<Navigate to="/" replace />} />
         </Routes>
       </div>
