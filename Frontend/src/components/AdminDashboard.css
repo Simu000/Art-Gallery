@@ -1,0 +1,520 @@
+/* Components/AdminDashboard.css */
+.admin-dashboard {
+  background: var(--cream);
+  min-height: 100vh;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+
+.admin-tab {
+  padding: 14px 28px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: transparent;
+  border: none;
+  color: var(--gray);
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 2px solid transparent;
+}
+
+.admin-tab:hover {
+  color: var(--charcoal);
+}
+
+.admin-tab.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+.admin-form-container {
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  padding: 48px;
+  margin-bottom: 48px;
+}
+
+.admin-form-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--charcoal);
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.admin-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.admin-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-form-group label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.admin-form-group input,
+.admin-form-group textarea,
+.admin-form-group select {
+  padding: 12px 16px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  border: 1px solid var(--border-light);
+  background: var(--off-white);
+  transition: all 0.2s;
+  outline: none;
+}
+
+.admin-form-group input:focus,
+.admin-form-group textarea:focus,
+.admin-form-group select:focus {
+  border-color: var(--gold);
+  background: var(--white);
+}
+
+.admin-form-group small {
+  font-size: 11px;
+  color: var(--gray-light);
+}
+
+.admin-submit {
+  background: var(--charcoal);
+  color: var(--white);
+  border: 1px solid var(--charcoal);
+  padding: 14px 32px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+
+.admin-submit:hover:not(:disabled) {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+.admin-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-success {
+  background: rgba(47, 111, 62, 0.1);
+  border-left: 3px solid #2f6f3e;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  color: #2f6f3e;
+  font-size: 13px;
+}
+
+.admin-manage {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.admin-manage-section h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--charcoal);
+  margin-bottom: 20px;
+}
+
+.admin-manage-list {
+  border: 1px solid var(--border-light);
+  background: var(--white);
+}
+
+.admin-manage-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.admin-manage-item:last-child {
+  border-bottom: none;
+}
+
+.admin-manage-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-manage-item-info strong {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--charcoal);
+}
+
+.admin-manage-item-info span {
+  font-size: 12px;
+  color: var(--gray);
+}
+
+.admin-delete-btn {
+  background: transparent;
+  border: 1px solid #c0392b;
+  color: #c0392b;
+  padding: 8px 20px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-delete-btn:hover {
+  background: #c0392b;
+  color: var(--white);
+}
+
+@media (max-width: 768px) {
+  .admin-form-container {
+    padding: 28px;
+  }
+  
+  .admin-form-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .admin-tab {
+    padding: 10px 16px;
+    font-size: 9px;
+  }
+  
+  .admin-manage-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}/* Components/AdminDashboard.css */
+.admin-dashboard {
+  background: var(--cream);
+  min-height: 100vh;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+
+.admin-tab {
+  padding: 14px 28px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: transparent;
+  border: none;
+  color: var(--gray);
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 2px solid transparent;
+}
+
+.admin-tab:hover {
+  color: var(--charcoal);
+}
+
+.admin-tab.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+.admin-form-container {
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  padding: 48px;
+  margin-bottom: 48px;
+}
+
+.admin-form-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--charcoal);
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.admin-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.admin-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-form-group label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.admin-form-group input,
+.admin-form-group textarea,
+.admin-form-group select {
+  padding: 12px 16px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  border: 1px solid var(--border-light);
+  background: var(--off-white);
+  transition: all 0.2s;
+  outline: none;
+}
+
+.admin-form-group input:focus,
+.admin-form-group textarea:focus,
+.admin-form-group select:focus {
+  border-color: var(--gold);
+  background: var(--white);
+}
+
+.admin-form-group small {
+  font-size: 11px;
+  color: var(--gray-light);
+}
+
+.admin-submit {
+  background: var(--charcoal);
+  color: var(--white);
+  border: 1px solid var(--charcoal);
+  padding: 14px 32px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+
+.admin-submit:hover:not(:disabled) {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+.admin-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-success {
+  background: rgba(47, 111, 62, 0.1);
+  border-left: 3px solid #2f6f3e;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  color: #2f6f3e;
+  font-size: 13px;
+}
+
+.admin-manage {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.admin-manage-section h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--charcoal);
+  margin-bottom: 20px;
+}
+
+.admin-manage-list {
+  border: 1px solid var(--border-light);
+  background: var(--white);
+}
+
+.admin-manage-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.admin-manage-item:last-child {
+  border-bottom: none;
+}
+
+.admin-manage-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-manage-item-info strong {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--charcoal);
+}
+
+.admin-manage-item-info span {
+  font-size: 12px;
+  color: var(--gray);
+}
+
+.admin-delete-btn {
+  background: transparent;
+  border: 1px solid #c0392b;
+  color: #c0392b;
+  padding: 8px 20px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-delete-btn:hover {
+  background: #c0392b;
+  color: var(--white);
+}
+
+@media (max-width: 768px) {
+  .admin-form-container {
+    padding: 28px;
+  }
+  
+  .admin-form-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .admin-tab {
+    padding: 10px 16px;
+    font-size: 9px;
+  }
+  
+  .admin-manage-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+
+/* Add these to AdminDashboard.css */
+
+.admin-form-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.admin-cancel {
+  background: transparent;
+  color: var(--gray);
+  border: 1px solid var(--border-light);
+  padding: 14px 32px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-cancel:hover {
+  background: var(--border-light);
+  color: var(--charcoal);
+}
+
+.admin-manage-item-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.admin-edit-btn {
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 8px 20px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-edit-btn:hover {
+  background: var(--gold);
+  color: var(--white);
+}
+
+@media (max-width: 768px) {
+  .admin-manage-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .admin-manage-item-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .admin-form-actions {
+    flex-direction: column;
+  }
+}
