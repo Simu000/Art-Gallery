@@ -33,6 +33,10 @@ export default function Navbar() {
     { to: '/contact', label: 'Contact' },
   ];
 
+  // Add admin link for admin users
+  const adminLink = user?.role === 'Admin' ? [{ to: '/admin', label: 'Admin' }] : [];
+  const allLinks = [...links, ...adminLink];
+
   const handleLogout = async () => {
     await logout();
     navigate('/');
@@ -42,12 +46,12 @@ export default function Navbar() {
     <nav className={`navbar ${scrolled || !isHome ? 'navbar--solid' : ''} ${menuOpen ? 'navbar--open' : ''}`}>
       <div className="navbar__inner">
         <Link to="/" className="navbar__logo">
-          <span className="navbar__logo-text">Ngurini</span>
-          <span className="navbar__logo-sub">Aboriginal Art Gallery</span>
+          <span className="navbar__logo-text">aborginal art gallery</span>
+          <span className="navbar__logo-sub">{'\u00A0'}</span>
         </Link>
 
         <div className="navbar__links">
-          {links.map(l => (
+          {allLinks.map(l => (
             <Link
               key={l.to}
               to={l.to}
@@ -90,7 +94,7 @@ export default function Navbar() {
       </div>
 
       <div className={`navbar__mobile ${menuOpen ? 'open' : ''}`}>
-        {links.map(l => (
+        {allLinks.map(l => (
           <Link key={l.to} to={l.to} className="navbar__mobile-link">{l.label}</Link>
         ))}
         {user ? (
